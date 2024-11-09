@@ -58,12 +58,25 @@ let lastGeneratedDiagram = null;
 
 async function generateDiagram() {
   const prompt = document.getElementById('umlPrompt').value;
+  const imageUploadInput = document.getElementById('imageUpload');
+  const file = imageUploadInput.files[0];
+
+  let base64Image = null;
+
+  // If there's an uploaded image, convert it to Base64
+  if (file) {
+    base64Image = await convertToBase64(file);
+  }
 
   const requestBody = {
     prompt,
     isUpdate: !!lastGeneratedDiagram,
-    lastPlantUmlCode: lastGeneratedDiagram
+    lastPlantUmlCode: lastGeneratedDiagram,
+    image: base64Image, // Add image data to request
   };
+
+  imageUploadInput.value = '';
+  document.getElementById('upload').style.display = 'none';
 
   try {
     const response = await fetch('/api/GenerateUml', {
@@ -97,6 +110,16 @@ async function generateDiagram() {
   } catch (error) {
     console.error('Error:', error);
   }
+}
+
+// Helper function to convert file to Base64
+function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
 }
 
 function addSvgHighlightListeners() {

@@ -2,10 +2,11 @@ import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/fu
 import * as fs from "fs";
 import * as path from "path";
 
-const OpenAI = require('openai'); // Import OpenAI from openai v4
-const plantumlEncoder = require('plantuml-encoder')
-const axios = require('axios');
+import plantumlEncoder = require('plantuml-encoder');
+import { image } from "html2canvas/dist/types/css/types/image";
 
+const axios = require('axios');
+const OpenAI = require('openai'); // Import OpenAI from openai v4
 // Configure OpenAI API
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY, // This is the default, so you can omit it if it is already set
@@ -15,9 +16,10 @@ export async function GenerateUml(request: HttpRequest, context: InvocationConte
     context.log(`Http function processed request for url "${request.url}"`);
 
     try {
-        const requestBody: { prompt?: string; isUpdate?: boolean; lastPlantUmlCode?: string } = await request.json();
-        const { prompt, isUpdate, lastPlantUmlCode } = requestBody;
+        const requestBody: { prompt?: string; isUpdate?: boolean; lastPlantUmlCode?: string; image?: string } = await request.json();
+        const { prompt, isUpdate, lastPlantUmlCode, image } = requestBody;
 
+        context.log("Image data: " + image);
         // Define the path to the file
         const filePath = path.join(__dirname, 'resources', 'plantUML-keywords.txt');
         let data;
@@ -33,18 +35,38 @@ export async function GenerateUml(request: HttpRequest, context: InvocationConte
         let keywords = `Valid PlantUML keywords: \n\`\`\`ascii\n${data}\n\`\`\`\n`;
         if (isUpdate && lastPlantUmlCode) {
             const decodedLastPlantUML = plantumlEncoder.decode(lastPlantUmlCode);
-            finalPrompt = `${keywords}\nHere is the existing PlantUML diagram:\n\`\`\`plantuml\n${decodedLastPlantUML}\n\`\`\`\nPlease make the following changes, ensuring no syntax errors: ${prompt}`;
+            finalPrompt = `${keywords}\nUpdate this diagram:\n\`\`\`plantuml\n${decodedLastPlantUML}\n\`\`\`\nMake the following changes: ${prompt}`;
         } else {
-            finalPrompt = `${keywords}\nGenerate a valid PlantUML diagram for: ${prompt}. It should be free from syntax errors.`;
+            finalPrompt = `${keywords}\nGenerate a valid PlantUML diagram from the image: ${prompt}. It should be free from syntax errors.`;
         }
 
-        context.log('Final prompt:', finalPrompt);
+        let content = [
+            {
+              type: 'text',
+              text: finalPrompt,
+            },
+            ...(image ? [{
+                type: 'image_url',
+                image_url: {
+                  url: image,
+                },
+            }] : [])
+        ]
+        // Create a chat completion with optional image
+        let messages = [
+            {
+              role: 'user',
+              content: content,
+            },
+        ];
+        
+        context.log('Final prompt:', messages);
 
-        // Create a chat completion
+        // Request OpenAI API
         const openaiResponse = await openai.chat.completions.create({
             model: 'gpt-4o-2024-08-06',
-            messages: [{ role: 'user', content: finalPrompt }],
-            max_tokens: 1500,
+            messages: messages,
+            max_tokens: 500,
         });
 
         const { language, code: plantUmlCode } = extractCodeBlock(openaiResponse.choices[0].message.content.trim());
