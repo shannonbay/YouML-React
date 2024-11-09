@@ -7,6 +7,9 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
+## Run the app
+OPENAI_API_KEY=your_key swa start http://localhost:5173 --run "npm run dev" --api-location ./api
+
 ## Create a new API endpoint:
 cd api
 func new --template "Http Trigger" --name Message
