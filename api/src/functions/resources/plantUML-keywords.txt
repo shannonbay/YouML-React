@@ -1,0 +1,1665 @@
+Do not mix diagram types
+Comments start with '
+Prefer to use only global elements unless explicitly asked
+Common Commands in PlantUML
+
+Discover the fundamental commands universally applicable across all diagram types in PlantUML. These commands allow you to inject versatility and personalized details into your diagrams. Below, we breakdown these common commands into three major categories:
+
+Global Elements
+
+    Comments: Add remarks or explanatory notes in your diagram script to convey additional information or to leave reminders for further modifications.
+    Notes: Incorporate supplementary information directly onto your diagram to aid in understanding or to highlight important aspects.
+    Size Control: Adjust the dimensions of various elements to suit your preferences, ensuring a balanced and well-proportioned diagram.
+    Title and Captions: Define a fitting title and add captions to elucidate the context or to annotate specific parts of your diagram.
+
+Creole Syntax Description
+Harness the power of Creole syntax to further format the content of any element within your diagram. This wiki markup style allows for:
+
+    Text Formatting: Customize the appearance of your text with various styles and alignments.
+    Lists: Create ordered or unordered lists to present information neatly.
+    Links: Integrate hyperlinks to facilitate quick navigation to relevant resources.
+
+Style Control Command
+Gain complete control over the presentation style of your diagram elements using the style command. Utilize this to:
+
+    Define Styles: Set uniform styles for elements to maintain a cohesive visual theme.
+    Customize Colors: Choose specific colors for various elements to enhance visual appeal and to create distinct classifications.
+
+Explore these commands to create diagrams that are both functional and aesthetically pleasing, tailoring each element to your exact specifications.
+Comments
+
+Simple comment
+Everything that starts with simple quote ' is a comment.
+
+@startuml
+'Line comments use a single apostrophe
+@enduml
+
+Block comment
+Block comment use C-style comments except that instead of * you use an apostrophe ', then you can also put comments on several lines using /' to start and '/ to end.
+
+@startuml
+/'
+many lines comments
+here
+'/
+@enduml
+
+[Ref. QA-1353]
+
+Then you can also put block comment on the same line, as:
+
+@startuml
+/' case 1 '/   A -> B : AB-First step 
+               B -> C : BC-Second step
+/' case 2 '/   D -> E : DE-Third step
+@enduml
+
+[Ref. QA-3906 and QA-3910]
+
+Full example
+
+@startuml
+skinparam activity {
+    ' this is a comment
+    BackgroundColor White
+    BorderColor Black /' this is a comment '/
+    BorderColor Red  ' this is not a comment and this line is ignored
+}
+
+start
+:foo1;
+@enduml
+
+[Ref. GH-214]
+Zoom
+
+You can use the scale command to zoom the generated image.
+
+You can use either a number or a fraction to define the scale factor. You can also specify either width or height (in pixel). And you can also give both width and height: the image is scaled to fit inside the specified dimension.
+
+    scale 1.5
+    scale 2/3
+    scale 200 width
+    scale 200 height
+    scale 200*100
+    scale max 300*200
+    scale max 1024 width
+    scale max 800 height
+
+@startuml
+scale 180*90
+Bob->Alice : hello
+@enduml
+
+Title
+The title keywords is used to put a title. You can add newline using \n in the title description.
+
+Some skinparam settings are available to put borders on the title.
+
+@startuml
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+
+title Simple communication\nexample
+
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+@enduml
+
+You can use creole formatting in the title.
+
+You can also define title on several lines using title and end title keywords.
+
+@startuml
+
+title
+ <u>Simple</u> communication example
+ on <i>several</i> lines and using <back:cadetblue>creole tags</back>
+end title
+
+Alice -> Bob: Authentication Request
+Bob -> Alice: Authentication Response
+
+@enduml
+
+Caption
+There is also a caption keyword to put a caption under the diagram.
+
+@startuml
+
+caption figure 1
+Alice -> Bob: Hello
+
+@enduml
+
+Footer and header
+You can use the commands header or footer to add a footer or a header on any generated diagram.
+
+You can optionally specify if you want a center, left or right footer/header, by adding a keyword.
+
+As with title, it is possible to define a header or a footer on several lines.
+
+It is also possible to put some HTML into the header or footer.
+
+@startuml
+Alice -> Bob: Authentication Request
+
+header
+<font color=red>Warning:</font>
+Do not use in production.
+endheader
+
+center footer Generated for demonstration
+
+@enduml
+
+Legend the diagram
+
+The legend and end legend are keywords is used to put a legend.
+
+You can optionally specify to have left, right, top, bottom or center alignment for the legend.
+
+@startuml
+Alice -> Bob : Hello
+legend right
+  Short
+  legend
+endlegend
+@enduml
+
+@startuml
+Alice -> Bob : Hello
+legend top left
+  Short
+  legend
+endlegend
+@enduml
+
+Appendix: Examples on all diagram
+
+Activity
+
+@startuml
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+start
+:Hello world;
+:This is defined on
+several **lines**;
+stop
+
+@enduml
+
+Archimate
+
+@startuml
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+archimate #Technology "VPN Server" as vpnServerA <<technology-device>>
+
+rectangle GO #lightgreen
+rectangle STOP #red
+rectangle WAIT #orange
+
+@enduml
+
+Class
+
+@startuml
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+a -- b 
+
+@enduml
+
+Component, Deployment, Use-Case
+
+@startuml
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+node n
+(u) -> [c]
+
+@enduml
+
+Gantt project planning
+
+@startgantt
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+
+[t] lasts 5 days
+
+@endgantt
+
+DONE
+[(Header, footer) corrected on V1.2020.18]
+
+Object
+
+@startuml
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+object user {
+  name = "Dummy"
+  id = 123
+}
+
+@enduml
+
+MindMap
+
+@startmindmap
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+* r
+** d1
+** d2
+
+@endmindmap
+
+Network (nwdiag)
+
+@startuml
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+nwdiag {
+  network inet {
+      web01 [shape = cloud]
+  }
+}
+
+@enduml
+
+Sequence
+
+@startuml
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+a->b
+@enduml
+
+State
+
+@startuml
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+[*] --> State1
+State1 -> State2
+
+@enduml
+
+Timing
+
+@startuml
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+robust "Web Browser" as WB
+concise "Web User" as WU
+
+@0
+WU is Idle
+WB is Idle
+
+@100
+WU is Waiting
+WB is Processing
+
+@300
+WB is Waiting
+
+@enduml
+
+Work Breakdown Structure (WBS)
+
+@startwbs
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+* r
+** d1
+** d2
+
+@endwbs
+
+DONE
+[Corrected on V1.2020.17]
+
+Wireframe (SALT)
+
+@startsalt
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+{+
+  Login    | "MyName   "
+  Password | "****     "
+  [Cancel] | [  OK   ]
+}
+@endsalt
+
+DONE
+[Corrected on V1.2020.18]
+Appendix: Examples on all diagram with style
+
+DONE
+
+FYI:
+
+    all is only good for Sequence diagram
+    title, caption and legend are good for all diagrams except for salt diagram
+
+FIXME
+🚩
+
+    Now (test on 1.2020.18-19) header, footer are not good for all other diagrams except only for Sequence diagram.
+
+To be fix; Thanks
+
+FIXME
+
+Here are tests of title, header, footer, caption or legend on all the diagram with the debug style:
+
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+
+Activity
+
+@startuml
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+start
+:Hello world;
+:This is defined on
+several **lines**;
+stop
+
+@enduml
+
+Archimate
+
+@startuml
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+archimate #Technology "VPN Server" as vpnServerA <<technology-device>>
+
+rectangle GO #lightgreen
+rectangle STOP #red
+rectangle WAIT #orange
+
+@enduml
+
+Class
+
+@startuml
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+a -- b 
+
+@enduml
+
+Component, Deployment, Use-Case
+
+@startuml
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+node n
+(u) -> [c]
+
+@enduml
+
+Gantt project planning
+
+@startgantt
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+
+[t] lasts 5 days
+
+@endgantt
+
+Object
+
+@startuml
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+object user {
+  name = "Dummy"
+  id = 123
+}
+
+@enduml
+
+MindMap
+
+@startmindmap
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+* r
+** d1
+** d2
+
+@endmindmap
+
+Network (nwdiag)
+
+@startuml
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+nwdiag {
+  network inet {
+      web01 [shape = cloud]
+  }
+}
+
+@enduml
+
+Sequence
+
+@startuml
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+a->b
+@enduml
+
+State
+
+@startuml
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+[*] --> State1
+State1 -> State2
+
+@enduml
+
+Timing
+
+@startuml
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+robust "Web Browser" as WB
+concise "Web User" as WU
+
+@0
+WU is Idle
+WB is Idle
+
+@100
+WU is Waiting
+WB is Processing
+
+@300
+WB is Waiting
+
+@enduml
+
+Work Breakdown Structure (WBS)
+
+@startwbs
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+* r
+** d1
+** d2
+
+@endwbs
+
+Wireframe (SALT)
+
+FIXME
+Fix all (title, caption, legend, header, footer) for salt. FIXME
+
+@startsalt
+<style>
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+</style>
+@startsalt
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+{+
+  Login    | "MyName   "
+  Password | "****     "
+  [Cancel] | [  OK   ]
+}
+@endsalt
+
+Mainframe
+
+@startuml
+mainframe This is a **mainframe**
+Alice->Bob : Hello
+@enduml
+
+[Ref. QA-4019 and Issue#148]
+Appendix: Examples of Mainframe on all diagram
+Activity
+
+@startuml
+mainframe This is a **mainframe**
+
+start
+:Hello world;
+:This is defined on
+several **lines**;
+stop
+@enduml
+
+Archimate
+
+@startuml
+mainframe This is a **mainframe**
+
+archimate #Technology "VPN Server" as vpnServerA <<technology-device>>
+rectangle GO #lightgreen
+rectangle STOP #red
+rectangle WAIT #orange
+@enduml
+
+FIXME
+🚩 Cropped on the top and on the left FIXME
+
+Class
+
+@startuml
+mainframe This is a **mainframe**
+
+a -- b 
+@enduml
+
+FIXME
+🚩 Cropped on the top and on the left FIXME
+
+Component, Deployment, Use-Case
+
+@startuml
+mainframe This is a **mainframe**
+
+node n
+(u) -> [c]
+@enduml
+
+FIXME
+🚩 Cropped on the top and on the left FIXME
+
+Gantt project planning
+
+@startgantt
+mainframe This is a **mainframe**
+
+[t] lasts 5 days
+@endgantt
+
+FIXME
+🚩 Cropped on the top and on the left FIXME
+
+Object
+
+@startuml
+mainframe This is a **mainframe**
+
+object user {
+  name = "Dummy"
+  id = 123
+}
+@enduml
+
+FIXME
+🚩 Cropped on the top! FIXME
+
+MindMap
+
+@startmindmap
+mainframe This is a **mainframe**
+
+* r
+** d1
+** d2
+@endmindmap
+
+Network (nwdiag)
+
+@startuml
+mainframe This is a **mainframe**
+
+nwdiag {
+  network inet {
+      web01 [shape = cloud]
+  }
+}
+@enduml
+
+FIXME
+🚩 Cropped on the top! FIXME
+
+Sequence
+
+@startuml
+mainframe This is a **mainframe**
+
+a->b
+@enduml
+
+State
+
+@startuml
+mainframe This is a **mainframe**
+
+[*] --> State1
+State1 -> State2
+@enduml
+
+FIXME
+🚩 Cropped on the top and on the left FIXME
+
+Timing
+
+@startuml
+mainframe This is a **mainframe**
+
+robust "Web Browser" as WB
+concise "Web User" as WU
+@0
+WU is Idle
+WB is Idle
+@100
+WU is Waiting
+WB is Processing
+@300
+WB is Waiting
+@enduml
+
+Work Breakdown Structure (WBS)
+
+@startwbs
+mainframe This is a **mainframe**
+* r
+** d1
+** d2
+@endwbs
+
+Wireframe (SALT)
+
+@startsalt
+mainframe This is a **mainframe**
+{+
+  Login    | "MyName   "
+  Password | "****     "
+  [Cancel] | [  OK   ]
+}
+@endsalt
+
+Appendix: Examples of title, header, footer, caption, legend and mainframe on all diagram
+
+Activity
+
+@startuml
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+start
+:Hello world;
+:This is defined on
+several **lines**;
+stop
+
+@enduml
+
+Archimate
+
+@startuml
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+archimate #Technology "VPN Server" as vpnServerA <<technology-device>>
+
+rectangle GO #lightgreen
+rectangle STOP #red
+rectangle WAIT #orange
+
+@enduml
+
+Class
+
+@startuml
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+a -- b 
+
+@enduml
+
+Component, Deployment, Use-Case
+
+@startuml
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+node n
+(u) -> [c]
+
+@enduml
+
+Gantt project planning
+
+@startgantt
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+
+[t] lasts 5 days
+
+@endgantt
+
+Object
+
+@startuml
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+object user {
+  name = "Dummy"
+  id = 123
+}
+
+@enduml
+
+MindMap
+
+@startmindmap
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+* r
+** d1
+** d2
+
+@endmindmap
+
+Network (nwdiag)
+
+@startuml
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+nwdiag {
+  network inet {
+      web01 [shape = cloud]
+  }
+}
+
+@enduml
+
+Sequence
+
+@startuml
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+a->b
+@enduml
+
+State
+
+@startuml
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+[*] --> State1
+State1 -> State2
+
+@enduml
+
+Timing
+
+@startuml
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+robust "Web Browser" as WB
+concise "Web User" as WU
+
+@0
+WU is Idle
+WB is Idle
+
+@100
+WU is Waiting
+WB is Processing
+
+@300
+WB is Waiting
+
+@enduml
+
+Work Breakdown Structure (WBS)
+
+@startwbs
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+* r
+** d1
+** d2
+
+@endwbs
+
+Wireframe (SALT)
+
+@startsalt
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+{+
+  Login    | "MyName   "
+  Password | "****     "
+  [Cancel] | [  OK   ]
+}
+@endsalt
+

@@ -1,0 +1,293 @@
+[
+    {
+      "messages": [
+        {"role": "system", "content": "assistant is an expert digital solution architect who generates syntactically valid plantUML diagrams for the given domain."},
+        {"role": "user", "content": "health monitoring mobile app wearable online portal HLD"},
+        {"role": "assistant", "content": "@startuml
+
+participant "Wearable" as W
+participant "Mobile App" as MA
+participant "Online Portal" as OP
+
+actor "User" as U
+
+U -> W : Wearable collects health data
+activate W
+W -> MA : Sync data with mobile app
+deactivate W
+activate MA
+
+MA -> MA : Process and analyze data
+MA -> U : Show health analytics
+deactivate MA
+
+== Online Portal Interaction ==
+
+U -> OP : Login
+activate OP
+
+alt Is user authenticated?
+OP -> U : Access granted
+else
+OP -> U : Access denied
+end
+
+par User interaction
+U -> OP : View health data
+activate OP
+OP -> U : Display detailed insights
+deactivate OP
+U -> OP : Log out
+deactivate OP
+end
+
+@enduml
+"}
+      ]
+    },
+    {
+      "messages": [
+        {"role": "system", "content": "assistant is an expert digital solution architect who generates syntactically valid plantUML diagrams for the given domain."},
+        {"role": "user", "content": "Create a comprehensive use case diagram for a library management system with multiple actors, use cases, and relationships between use cases."},
+        {"role": "assistant", "content": "@startuml
+  actor Member
+  actor Librarian
+  actor Administrator
+  
+  usecase "Borrow Book" as UC1
+  usecase "Return Book" as UC2
+  usecase "Manage Inventory" as UC3
+  usecase "Register Member" as UC4
+  usecase "Update Catalog" as UC5
+  
+  Member --> UC1
+  Member --> UC2
+  Librarian --> UC3
+  Librarian --> UC4
+  Administrator --> UC5
+  
+  UC1 <|-- UC2 : <<extends>>
+  UC3 <|-- UC5 : <<includes>>
+  @enduml"}
+      ]
+    },
+    {
+      "messages": [
+        {"role": "system", "content": "assistant is an expert digital solution architect who generates syntactically valid plantUML diagrams for the given domain."},
+        {"role": "user", "content": "Draw a comprehensive class diagram for a vehicle rental system, including attributes, methods, inheritance, and relationships between classes."},
+        {"role": "assistant", "content": "@startuml
+  class Vehicle {
+    -String brand
+    -String model
+    -double rentalPrice
+    +void rent()
+    +void returnVehicle()
+  }
+  
+  class Car {
+    +int numDoors
+    +boolean hasAirConditioning
+  }
+  
+  class Bike {
+    +boolean hasCarrier
+  }
+  
+  class Rental {
+    -String rentalId
+    -Date startDate
+    -Date endDate
+    +void createRental()
+    +void closeRental()
+  }
+  
+  Vehicle <|-- Car
+  Vehicle <|-- Bike
+  Rental *-- Vehicle : rentedVehicle
+  @enduml"}
+      ]
+    },
+    {
+      "messages": [
+        {"role": "system", "content": "assistant is an expert digital solution architect who generates syntactically valid plantUML diagrams for the given domain."},
+        {"role": "user", "content": "Create a comprehensive activity diagram for an online shopping checkout process with multiple decision points and parallel activities."},
+        {"role": "assistant", "content": "@startuml
+  start
+  :Begin Checkout;
+  if (Items in Cart?) then (yes)
+    :Display Cart;
+    :Enter Shipping Details;
+    fork
+      :Choose Payment Method;
+    fork again
+      :Apply Discount Code;
+    end fork
+    if (Is Payment Successful?) then (yes)
+      :Confirm Order;
+      :Send Confirmation Email;
+    else (no)
+      :Prompt Payment Retry;
+    endif
+  else (no)
+    :Show Empty Cart Message;
+  endif
+  stop
+  @enduml"}
+      ]
+    },
+    {
+      "messages": [
+        {"role": "system", "content": "assistant is an expert digital solution architect who generates syntactically valid plantUML diagrams for the given domain."},
+        {"role": "user", "content": "Generate a comprehensive component diagram for a banking application, including all major components and their interactions."},
+        {"role": "assistant", "content": "@startuml
+  component Frontend {
+    [Mobile App]
+    [Web App]
+  }
+  component Backend {
+    [API Gateway]
+    [Authentication Service]
+    [Transaction Service]
+  }
+  component Database {
+    [Accounts DB]
+    [Transactions DB]
+  }
+  
+  Frontend --> Backend : API Calls
+  Backend --> Database : Queries
+  [Authentication Service] --> [Accounts DB] : Validate User
+  [Transaction Service] --> [Transactions DB] : Record Transaction
+  @enduml"}
+      ]
+    },
+    {
+      "messages": [
+        {"role": "system", "content": "assistant is an expert digital solution architect who generates syntactically valid plantUML diagrams for the given domain."},
+        {"role": "user", "content": "Draw a comprehensive state diagram for a user account management system, covering all possible states and transitions."},
+        {"role": "assistant", "content": "@startuml
+  state LoggedOut
+  state LoggedIn
+  state PasswordReset
+  state Locked
+  
+  LoggedOut --> LoggedIn: Successful Login
+  LoggedIn --> LoggedOut: Logout
+  LoggedIn --> Locked: Too Many Failed Attempts
+  Locked --> PasswordReset: Reset Password Request
+  PasswordReset --> LoggedOut: Password Successfully Reset
+  @enduml"}
+      ]
+    },
+    {
+      "messages": [
+        {"role": "system", "content": "assistant is an expert digital solution architect who generates syntactically valid plantUML diagrams for the given domain."},
+        {"role": "user", "content": "Create a comprehensive deployment diagram for a healthcare application with multiple nodes, covering both on-premises and cloud components."},
+        {"role": "assistant", "content": "@startuml
+  node OnPremises {
+    node WebServer {
+      [Frontend Application]
+    }
+    node DatabaseServer {
+      [Patient Records DB]
+    }
+  }
+  
+  node Cloud {
+    node "AWS Cloud" {
+      [Authentication Service]
+      [Analytics Service]
+    }
+  }
+  
+  [Frontend Application] --> [Authentication Service]: Authenticate User
+  [Frontend Application] --> [Patient Records DB]: Read/Write Data
+  [Analytics Service] --> [Patient Records DB]: Perform Data Analysis
+  @enduml"}
+      ]
+    },
+    {
+      "messages": [
+        {"role": "system", "content": "assistant is an expert digital solution architect who generates syntactically valid plantUML diagrams for the given domain."},
+        {"role": "user", "content": "Generate a comprehensive object diagram for a car rental system, showing instances with specific attributes and relationships."},
+        {"role": "assistant", "content": "@startuml
+  object car1 : Car
+  car1 : brand = "Toyota"
+  car1 : model = "Corolla"
+  car1 : numDoors = 4
+  
+  object car2 : Car
+  car2 : brand = "Ford"
+  car2 : model = "Mustang"
+  car2 : numDoors = 2
+  
+  object bike1 : Bike
+  bike1 : brand = "Yamaha"
+  bike1 : model = "FZ"
+  bike1 : hasCarrier = true
+  
+  object rental1 : Rental
+  rental1 : rentalId = "R123"
+  rental1 : startDate = "2024-11-01"
+  rental1 : endDate = "2024-11-05"
+  rental1 : rentedVehicle = car1
+  @enduml"}
+      ]
+    },
+    {
+      "messages": [
+        {"role": "system", "content": "assistant is an expert digital solution architect who generates syntactically valid plantUML diagrams for the given domain."},
+        {"role": "user", "content": "Draw a comprehensive timing diagram illustrating message flow between components in a video streaming platform, including buffering and playback events."},
+        {"role": "assistant", "content": "@startuml
+  timeline VideoStreaming
+  participant Client
+  participant Server
+  participant Buffer
+  
+  @0 Client -> Server : Request Video
+  @5 Server -> Client : Send Video Metadata
+  @10 Client -> Buffer : Start Buffering
+  @15 Buffer -> Client : Buffering Complete
+  @20 Client -> Client : Start Playback
+  @25 Buffer -> Client : Buffer Underrun
+  @30 Buffer -> Client : Resume Playback
+  @enduml"}
+      ]
+    },
+    {
+      "messages": [
+        {"role": "system", "content": "assistant is an expert digital solution architect who generates syntactically valid plantUML diagrams for the given domain."},
+        {"role": "user", "content": "Create a comprehensive component diagram for a restaurant ordering system with packages, covering all key actors and their interactions."},
+        {"role": "assistant", "content": "@startuml
+  package OrderingSystem {
+    actor Customer
+    usecase PlaceOrder
+    usecase MakePayment
+    usecase TrackOrder
+  }
+  
+  package KitchenSystem {
+    actor Chef
+    usecase PrepareFood
+    usecase UpdateOrderStatus
+  }
+  
+  package DeliverySystem {
+    actor DeliveryPerson
+    usecase DeliverOrder
+    usecase UpdateDeliveryStatus
+  }
+  
+  Customer --> PlaceOrder
+  Customer --> MakePayment
+  Customer --> TrackOrder
+  PlaceOrder --> PrepareFood : <<include>>
+  PrepareFood --> UpdateOrderStatus : <<include>>
+  UpdateOrderStatus --> DeliverOrder : <<include>>
+  DeliveryPerson --> DeliverOrder
+  DeliveryPerson --> UpdateDeliveryStatus
+  @enduml"}
+      ]
+    }
+  ]
+  

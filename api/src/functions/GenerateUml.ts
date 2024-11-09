@@ -21,7 +21,7 @@ export async function GenerateUml(request: HttpRequest, context: InvocationConte
 
         context.log("Image data: " + image);
         // Define the path to the file
-        const filePath = path.join(__dirname, 'resources', 'plantUML-keywords.txt');
+        const filePath = path.join(__dirname, '../../../src/functions/resources', 'plantUML-keywords.txt');
         let data;
         try {
             data = fs.readFileSync(filePath, 'utf8');

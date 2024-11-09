@@ -1,0 +1,67 @@
+<bnf>
+<diagram> ::= <sequence_diagram> | <use_case_diagram> | <class_diagram> | <component_diagram> | <activity_diagram> | <state_diagram> | <deployment_diagram> | <other_diagram>
+
+<sequence_diagram> ::= "@startuml" <sequence_elements> "@enduml"
+<sequence_elements> ::= (<participant> | <message> | <group> | <note> | <activation>)*
+<participant> ::= ("participant" | "actor" | "boundary" | "control" | "entity" | "database" | "collections" | "queue") <identifier> ["as" <alias>] [<color>]
+<message> ::= <identifier> ("->" | "-->") <identifier> [":" <message_text>]
+<group> ::= ("alt" | "opt" | "loop" | "par" | "break" | "critical" | "group") <group_label> <sequence_elements> "end"
+<note> ::= ("note left" | "note right" | "note over") <identifier> [":" <note_text>] ["end note"]
+<activation> ::= ("activate" | "deactivate" | "destroy") <identifier>
+
+<use_case_diagram> ::= "@startuml" <use_case_elements> "@enduml"
+<use_case_elements> ::= (<actor> | <usecase> | <relation> | <note>)*
+<actor> ::= "actor" <identifier> ["as" <alias>] [<style>]
+<usecase> ::= ("usecase" | "(" <usecase_name> ")") ["as" <alias>]
+<relation> ::= <identifier> ("-->" | "<--" | "<|--") <identifier> [":" <relation_label>]
+
+<class_diagram> ::= "@startuml" <class_elements> "@enduml"
+<class_elements> ::= (<class_declaration> | <relation> | <note>)*
+<class_declaration> ::= ("class" | "interface" | "abstract class" | "enum" | "annotation") <identifier> ["{" <class_body> "}"]
+<class_body> ::= (<field> | <method>)*
+<field> ::= [<visibility>] <identifier> [":" <type>]
+<method> ::= [<visibility>] <identifier> "(" [<parameters>] ")" [":" <return_type>]
+<visibility> ::= "-" | "#" | "~" | "+"
+
+<component_diagram> ::= "@startuml" <component_elements> "@enduml"
+<component_elements> ::= (<component> | <interface> | <relation> | <note>)*
+<component> ::= "component" <identifier> ["as" <alias>]
+<interface> ::= "interface" <identifier> ["as" <alias>]
+
+<activity_diagram> ::= "@startuml" <activity_elements> "@enduml"
+<activity_elements> ::= (<start> | <end> | <activity> | <decision> | <note>)*
+<start> ::= "start"
+<end> ::= "end"
+<activity> ::= <identifier> "->" <identifier> [":" <activity_label>]
+<decision> ::= <identifier> "-->" ("yes" | "no") "-->" <identifier>
+
+<state_diagram> ::= "@startuml" <state_elements> "@enduml"
+<state_elements> ::= (<state> | <transition> | <note>)*
+<state> ::= "state" <identifier> ["{" <state_body> "}"]
+<transition> ::= <identifier> "->" <identifier> [":" <transition_label>]
+
+<deployment_diagram> ::= "@startuml" <deployment_elements> "@enduml"
+<deployment_elements> ::= (<node> | <artifact> | <relation> | <note>)*
+<node> ::= "node" <identifier> ["{" <node_body> "}"]
+<artifact> ::= "artifact" <identifier>
+
+<other_diagram> ::= <json_data> | <yaml_data> | <network_diagram> | <wireframe>
+<json_data> ::= "@startjson" <json_content> "@endjson"
+<yaml_data> ::= "@startyaml" <yaml_content> "@endyaml"
+<network_diagram> ::= "@startnwdiag" <network_content> "@endnwdiag"
+<wireframe> ::= "@startwireframe" <wireframe_content> "@endwireframe"
+
+<identifier> ::= <letter> (<letter> | <digit> | "_" )*
+<alias> ::= <identifier>
+<color> ::= "#" <hex_digit> <hex_digit> <hex_digit> <hex_digit> <hex_digit> <hex_digit>
+<group_label> ::= <text>
+<message_text> ::= <text>
+<relation_label> ::= <text>
+<usecase_name> ::= <text>
+<activity_label> ::= <text>
+<transition_label> ::= <text>
+<text> ::= <character>*
+<letter> ::= "a" | "b" | "c" | ... | "z" | "A" | "B" | ... | "Z"
+<digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+<hex_digit> ::= <digit> | "a" | "b" | "c" | "d" | "e" | "f" | "A" | "B" | "C" | "D" | "E" | "F"
+</bnf>

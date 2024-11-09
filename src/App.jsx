@@ -77,6 +77,8 @@ async function generateDiagram() {
 
   imageUploadInput.value = '';
   document.getElementById('upload').style.display = 'none';
+  document.getElementById('thumbnailContainer').style.display = 'none';
+
 
   try {
     const response = await fetch('/api/GenerateUml', {
