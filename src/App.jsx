@@ -3,6 +3,7 @@ import youmlLogo from '/logo.webp';
 import './App.css';
 import plantumlEncoder from 'plantuml-encoder';
 import html2canvas from 'html2canvas';
+import ImageUploadButton from './ImageUploadButton';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -23,10 +24,7 @@ function App() {
       >
         sequence diagram. expressjs, frontend, send natural language diagram descriptions to api which first calls OpenAI API to generate plantUML, then invokes plantUML.com to generate the actual diagram image, and renders the image on the page. !theme amiga
       </textarea>
-      <div id='upload'>
-        <input id='imageUpload' type="file" accept="image/*"/>
-        <div id="thumbnailContainer" class="thumbnail-container"></div>
-      </div>
+      <ImageUploadButton/>
       <div className="card">
         <button onClick={generateDiagram} id="generateButton">
           Generate Diagram
@@ -57,37 +55,6 @@ function App() {
 }
 
 let lastGeneratedDiagram = null;
-
-document.getElementById('imageUpload').addEventListener('change', function(event) {
-  const file = event.target.files[0];
-
-  if (file) {
-    // Create a FileReader to read the image file
-    const reader = new FileReader();
-
-    // Set up the callback for when the reader has loaded the image data
-    reader.onload = function(e) {
-      // Get the container for the thumbnail
-      const thumbnailContainer = document.getElementById('thumbnailContainer');
-
-      // Clear any previous thumbnail
-      thumbnailContainer.innerHTML = '';
-
-      // Create an image element for the thumbnail
-      const img = document.createElement('img');
-      img.src = e.target.result; // Set the src to the image data
-      img.style.width = '100px'; // Thumbnail size (adjust as needed)
-      img.style.height = '100px';
-      img.style.objectFit = 'cover'; // Make sure the image fits nicely
-
-      // Append the image thumbnail to the container
-      thumbnailContainer.appendChild(img);
-    };
-
-    // Read the file as a Data URL (base64 encoded string)
-    reader.readAsDataURL(file);
-  }
-});
 
 async function generateDiagram() {
   const prompt = document.getElementById('umlPrompt').value;
